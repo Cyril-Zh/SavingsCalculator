@@ -28,6 +28,9 @@ final class HomeViewController: UIViewController {
         let button = UIButton()
         button.setTitle("Calculate", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 15
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.systemGreen.cgColor
         button.titleLabel?.font = .systemFont(ofSize: 25, weight: .regular)
         button.backgroundColor = .systemGreen
         button.translatesAutoresizingMaskIntoConstraints = false
