@@ -3,6 +3,8 @@ import UIKit
 final class ResultViewController: UIViewController {
     
     var result = String()
+    var oneAction = String()
+    var mothe = Double()
     
     private lazy var button: UIButton = {
         let button = UIButton()
@@ -53,7 +55,7 @@ final class ResultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        label.text = oneAction
         view.backgroundColor = .white
         view.addSubview(button)
         view.addSubview(label)
@@ -83,5 +85,13 @@ final class ResultViewController: UIViewController {
     
     @objc func recalculateButton(sender: UIButton) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func calculate(for percent: String) {
+//        result = String((Double(oneAction)) *  (Double(percent) ?? 5) * Double(mothe))
+        print(result)
+        print(oneAction)
+        print(percent)
+        print(mothe)
     }
 }
