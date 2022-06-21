@@ -33,7 +33,7 @@ final class ResultViewController: UIViewController {
     
     private var resultLabel: UILabel = {
         let label = UILabel()
-        label.text = "many"
+        //label.text = "many"
         label.textColor = .systemGreen
         label.font = .systemFont(ofSize: 40, weight: .regular)
         label.textAlignment = .center
@@ -53,7 +53,7 @@ final class ResultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        resultLabel.text = result
         view.backgroundColor = .white
         view.addSubview(button)
         view.addSubview(label)
