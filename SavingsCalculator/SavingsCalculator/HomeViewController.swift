@@ -1,6 +1,6 @@
 import UIKit
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     private let textField: UITextField = {
         let textField = UITextField()
@@ -22,6 +22,7 @@ final class HomeViewController: UIViewController {
     
     private lazy var stepper: UIStepper = {
         let stepper = UIStepper()
+        stepper.value = 1
         stepper.translatesAutoresizingMaskIntoConstraints = false
         stepper.addTarget(self, action: #selector(stepperUp), for: .valueChanged)
         
@@ -54,8 +55,6 @@ final class HomeViewController: UIViewController {
     
     private lazy var piker: UIPickerView = {
         let piker = UIPickerView()
-        piker.dataSource = self
-        piker.delegate = self
         
         return piker
     }()
@@ -66,21 +65,35 @@ final class HomeViewController: UIViewController {
         return stackView
     }()
     
-    let percentagesArray = ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95", "100"]
+    private let titlePercent: UILabel = {
+        let title = UILabel()
+        title.text = "% Which I will postpone"
+        title.font = .systemFont(ofSize: 20, weight: .regular)
+        title.textAlignment = .center
+        title.translatesAutoresizingMaskIntoConstraints = false
+        
+        return title
+    }()
+    
+    let percentagesArray = ["0","5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95", "100"]
     
     var numberMoth = Double()
     var percent = String()
     var result = String()
-    var resultVC = ResultViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        piker.dataSource = self
+        piker.delegate = self
         
         view.backgroundColor = .white
         view.addSubview(stackViewStepper)
         view.addSubview(textField)
         view.addSubview(button)
         view.addSubview(piker)
+        view.addSubview(titlePercent)
+        
         piker.center = view.center
         
         label.text = "1"
@@ -100,7 +113,8 @@ final class HomeViewController: UIViewController {
             button.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 80),
             button.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -80),
             
-            
+            titlePercent.topAnchor.constraint(equalTo: textField.topAnchor, constant: 204),
+            titlePercent.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             
         ]
         
@@ -126,14 +140,12 @@ final class HomeViewController: UIViewController {
     //MARK: - calculateButton
     
     @objc func calculateButton(sender: UIButton) {
+        let salary = textField.text ?? "0"
+        result = String((((Double(salary) ?? 0) / 100) * (Double(percent) ?? 0)) * numberMoth)
         let resultVC = ResultViewController()
+        resultVC.result = result
         resultVC.modalPresentationStyle = .fullScreen
         present(resultVC, animated: true, completion: nil)
-        let salary = textField.text ?? "0"
-//        let actionOne = Double(salary)! / 100
-        resultVC.oneAction = salary
-        resultVC.mothe = numberMoth
-        
     }
     
     //MARK: - stepperUp
@@ -142,12 +154,6 @@ final class HomeViewController: UIViewController {
         label.text = "\(Int(sender.value))"
         numberMoth = sender.value
     }
-    
-}
-
-//MARK: - UIPickerDelegate
-
-extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -163,6 +169,8 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let selectedPercent = percentagesArray[row]
-        resultVC.calculate(for: selectedPercent)
+        percent = selectedPercent
+        
     }
 }
+
