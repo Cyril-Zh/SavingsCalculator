@@ -75,6 +75,16 @@ final class HomeViewController: UIViewController, UIPickerViewDelegate, UIPicker
         return title
     }()
     
+    private let titleMonths: UILabel = {
+        let title = UILabel()
+        title.text = "Months"
+        title.font = .systemFont(ofSize: 20, weight: .regular)
+        title.textAlignment = .center
+        title.translatesAutoresizingMaskIntoConstraints = false
+        
+        return title
+    }()
+    
     let percentagesArray = ["0","5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80", "85", "90", "95", "100"]
     
     var numberMoth = Double()
@@ -93,6 +103,7 @@ final class HomeViewController: UIViewController, UIPickerViewDelegate, UIPicker
         view.addSubview(button)
         view.addSubview(piker)
         view.addSubview(titlePercent)
+        view.addSubview(titleMonths)
         
         piker.center = view.center
         
@@ -114,7 +125,10 @@ final class HomeViewController: UIViewController, UIPickerViewDelegate, UIPicker
             button.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -80),
             
             titlePercent.topAnchor.constraint(equalTo: textField.topAnchor, constant: 204),
-            titlePercent.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            titlePercent.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            titleMonths.topAnchor.constraint(equalTo: stackViewStepper.topAnchor, constant: -40),
+            titleMonths.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             
         ]
         
